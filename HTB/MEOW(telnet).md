@@ -1,5 +1,5 @@
 
-nmap scanning :
+Nmap scanning :
 
 ~~~
 nmap 10.129.204.160 -sC -sV
@@ -57,6 +57,8 @@ this exploit does not work
 
 
 successfully finished this lab 🔥🔥
+
+
 
 
 

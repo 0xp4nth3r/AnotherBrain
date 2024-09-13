@@ -95,7 +95,8 @@ use gobuster to subdomain enumuration
 ~~~
 
 ~~~
-gobuster dir -d 10.129.20.69 -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt -x php
+gobuster dir -d 10.129.20.69 -w
+/usr/share/wordlists/dirbuster/directory-list-2.3-small.txt -x php
 ~~~
 
 dir for directory

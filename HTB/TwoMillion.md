@@ -383,13 +383,15 @@ root@2million:/root#
 ~~~
 
  this machine exploit to this vuln # PoC Exploit Released for Linux Kernel Privilege Escalation (CVE-2023-0386) Bug
+ 
 ~~~
 scp CVE-2023-0386-master.zip admin@2million.htb:/tmp/
 admin@2million.htb's password: 
 CVE-2023-0386-master.zip
 ~~~
 
-download the cve in your machine use this send the cve to attacker machine in the tmp directory 
+download the cve in your machine use this send the cve to attacker machine in the tmp directory
+
 scp (secure copy) command in Linux system is **used to copy file(s) between servers in a secure way next open the two terminal and execute this commands
 
 ![[Pasted image 20230823192539.png]]
