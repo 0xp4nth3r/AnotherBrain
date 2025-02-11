@@ -1,2 +1,0 @@
-
-python is the programming language . It was created by Guido van Rossum, and released in 1991. Python is **a very popular general-purpose interpreted, interactive, object-oriented, and high-level programming language**. Python is dynamically-typed and garbage-collected programming language.

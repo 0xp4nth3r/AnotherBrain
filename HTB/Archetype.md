@@ -1,7 +1,11 @@
 
 nmap scanning:
 
+~~~
 nmap  10.129.7.59 -sC -sV
+~~~
+
+~~~
 Starting Nmap 7.93 ( https://nmap.org ) at 2023-05-29 12:42 EDT
 Nmap scan report for 10.129.7.59
 Host is up (0.26s latency).
@@ -41,6 +45,7 @@ Host script results:
 
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 29.98 seconds
+~~~
 
 What is the use of Smbclient in Linux?
 
@@ -48,11 +53,17 @@ smbclient is **commonly used in network administration tasks, such as transferr
 
 smbclient:
 
+~~~
 smbclient -N -L \\\\  10.129.7.59\\ 
+~~~
+
 -N : No password  
 -L : This option allows you to look at what services are available on a server
 
+~~~
 smbclient -N -L \\\\10.129.7.59\\
+~~~
+
 
         Sharename       Type      Comment
         ---------       ----      -------

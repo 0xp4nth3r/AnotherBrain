@@ -1,2 +1,0 @@
-tftp trival file transfer protocol
-Using ASCII (American Standard Code for Information Interchange) and binary modes, file transfers complete faster since TFTP uses **UDP (User Datagram Protocol)** for the transport layer protocol, which is much simpler compared to the complicated TCP (Transmission Control Protocol).
