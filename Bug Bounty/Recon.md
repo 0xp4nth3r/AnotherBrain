@@ -86,3 +86,15 @@ indentifing live web services
 httpx -l live_subs.txt -title -sc -location -p 80,443,8000,8080,8443 -td -cl -probe -o httpx_output.txt
 ```
 
+```
+cat urls.txt | katana -silent | hakrawler -d 3  | anew katanas.txt
+```
+
+LFI 
+
+Google dorks
+
+```
+site:*.TARGET.COM inurl:?page= filetype:php
+```
+
