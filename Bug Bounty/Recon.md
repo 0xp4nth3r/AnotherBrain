@@ -1,5 +1,4 @@
 
-
 Subdomain enum
 
 ~~~
@@ -16,7 +15,18 @@ find live domain
 cat subfinder.txt | httprobe | tee -a alivesubs.txt
 ~~~
 
+
+```
+cat alivesubs.txt | hakrawler -u | grep -i "PHP" | tee Php.txt
+
+```
+
+```
+katana -u unep.org | grep -Eo 'https?://[^"]+\.js' >> js.txt
+```
+
 wayback urls
+
 
 
 ~~~

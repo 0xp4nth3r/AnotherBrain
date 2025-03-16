@@ -28,10 +28,6 @@ The CIA Triad is a fundamental concept in cybersecurity that stands for Confiden
 The CIA Triad is a core framework used to guide policies and measures in cybersecurity to protect against various threats and vulnerabilities.
 
 
-
-
-
-
 Sure! Here’s a clear explanation of each term:
 
 ### Vulnerability:
@@ -197,10 +193,3 @@ OWASP (Open Web Application Security Project) is a nonprofit organization dedica
     
     - **Focus**: Tests the security of physical access controls to facilities, such as building entry systems, surveillance cameras, and secure areas.
     - **Goal**: Identify vulnerabilities in physical security that could be exploited to gain unauthorized access to sensitive areas.
-
-
-
-
-
-
-
