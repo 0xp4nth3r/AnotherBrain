@@ -43,4 +43,44 @@ Enumerate Group Policy
 
 ![[Pasted image 20250313130722.png]]
 
+Team NOVA
+
+1.Pradyun
+2.dhinesh
+3.Jack
+4.Mannu
+5.homelander
+6.Hari
+
+
+Individual 
+
+
+7.Subhash
+8.subhika
+9.subhashini
+
+
+Alternative : iQuberz
+
+
+10.Guru
+11.Shanjai
+12.Madhav
+13.Partha
+14.Navi
+15.prathibha
+
+
+
+
+
+
+Waiting !
+
+
+
+
+
+TEAM 2
 
