@@ -284,3 +284,17 @@ We will use this certificate later!
 
 ### Credentials Extraction – Generates events in MDE
 
+Let's look at some of the steps that will be detected by MDE:
+
+We can use the following command to extract credentials from lsass using rundll32.exe. Both rundll32.exe and comsvcs.dll are Microsoft signed. We are creating a memory dump of the lsass process and we will parse it offline on the student VM. Since the comsvcs.dll based memory dump is detected by Defender we will need to disable Defender by executing “Set-MpPreference -DisableRealtimeMonitoring $true” command. Note that because of MDE Set-MpPreference would fail.
+
+Run the below commands from a process running as jumpone:
+
+```
+tasklist /FI "IMAGENAME eq lsass.exe"
+```
+
+![[Pasted image 20250318160402.png]]
+
+Note that the above command fails and will result in a detection in MDE.
+
