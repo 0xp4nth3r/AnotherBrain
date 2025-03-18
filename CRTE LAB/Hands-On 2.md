@@ -3,6 +3,11 @@
 Import-Module C:\AD\Tools\ADModule-master\Microsoft.ActiveDirectory.Management.dll
 Import-Module C:\AD\Tools\ADModule-master\ActiveDirectory\ActiveDirectory.psd1
 
+```
+C:\AD\Tools\ArgSplit.bat
+```
+
+
 invishell
 ~~~
 C:\AD\Tools\InviShell\RunWithRegistryNonAdmin.bat
