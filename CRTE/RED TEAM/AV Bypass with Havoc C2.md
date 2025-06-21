@@ -179,3 +179,4 @@ x86_64-w64-mingw32-g++ --static webloader.cpp -o webloader.exe -lwinhttp -fpermi
 
 
 ![[Pasted image 20250418160619.png]]
+
